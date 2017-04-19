@@ -1,0 +1,27 @@
+.gb_6b{
+	max-width:144px;
+	max-height:60px;
+}
+
+h1{
+	padding-top: 3%;
+}
+
+#pantallazos{
+	text-align:center;
+}
+
+#div_pantallazos_dev{
+	padding-right:20px;
+	display:inline-block;
+}
+
+#div_pantallazos_pro{
+	padding-left:20px;
+	border-left:1px solid;
+	display:inline-block;
+}
+
+#datetime_picker{
+	width: 25%;
+}

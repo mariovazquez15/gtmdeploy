@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Prueba</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-signin-client_id" content="970312451445-mahnkd4740luc5hkf6g4dhgrefmp0pcf.apps.googleusercontent.com">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+  <script type="text/javascript">
+  document.getElementById("signOut").style.display = none;
+  function onSignIn(googleUser) {
+    
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  var regexp = new RegExp("@the-cocktail[.]com");
+  console.log(regexp.test(profile.getEmail()));
+  
+  if(!(regexp.test(profile.getEmail()))){
+      signOut();
+      alert("Debe pertenecer a The Cocktail para poder utilizar esta página.");
+  }else{
+    console.log(profile.getEmail());
+    document.getElementById("email_origen").value = profile.getEmail();
+  }
+      document.getElementById("signOut").style.display = block;
+}
+
+    function signOut() {
+
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+      document.getElementById("signOut").style.display = none;
+    });
+  }
+</script>
+</head>
+
+
+<body>
+<!-- Just an image -->
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded ">
+  <a style="background-color: red;" class="navbar-brand" href="#">
+    <span class="navbar-brand">
+        <img class="gb_6b" src="https://www.google.com/a/the-cocktail.com/images/logo.gif?alpha=1&amp;service=google_default" style="max-width:144px;max-height:60px">
+    </span>
+  </a>
+
+  <div style="background-color: blue;" class="collapse navbar-collapse inline my-2 my-lg-0" id="navbarSupportedContent">
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <a href="#" id="signOut" onclick="signOut();">Sign out</a>
+  </div>
+    
+</nav>
+
+
+<div class="container">
+
+<h1 style="padding-top: 3%;">Protocolo de subida:</h1>
+  <p>Una publicación en Tealium solo podrá ocurrir de lunes a jueves excepto víspera de festivo de 10h a 17h y siempre se enviará  un correo a NH que contenga:</p>
+  <ul>
+    <li>Pantallazos de la prueba correcta en DEV</li>
+    <li>Pantallazos de la prueba correcta en PRO</li>
+    <li>Descripción de los cambios, que coincidirá con la descripción en Tealium</li>
+    <li>Fecha y hora de la publicación</li>
+  </ul>
+<form role="form" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="ejemplo_email_1"><strong>Email</strong></label>
+        <input type="email" class="form-control" id="email_destino" name="email_destino" placeholder="Introduce el email de destino">
+    </div>
+    <div class="form-group">
+      <label for="ejemplo_archivo_1" style="display:block;"><strong>Adjuntar pantallazos</strong></label>
+      <input type="file" id="pantallazos" name="pantallazos[]" multiple>
+    </div>
+    <div class="form-group">
+      <label for="ejemplo_email_1"><strong>Entorno:</strong></label>
+      <label class="radio-inline active"><input checked type="radio" value="DEV" name="optradio"> DEV</label>
+      <label class="radio-inline"><input type="radio" value="PRO" name="optradio"> PRO</label>
+    </div>
+    <div class="form-group">
+        <label for="comment"><strong>Cambios realizados:</strong></label>
+        <textarea class="form-control" rows="5" id="changes" name="changes" placeholder="Introduce una descripción de los cambios realizados"></textarea>
+    </div>
+    
+    <div class="form-group row">
+    <label for="example-datetime-local-input" class="col-2 col-form-label">Fecha y hora</label>
+      <div class="col-10">
+        <input class="form-control" style="width: 25%;" type="datetime-local" value="YYYY-MM-DD HH:MM:SS" id="datetime_picker" name="datetime_picker">
+      </div>
+  </div>
+    <input type="hidden" id="email_origen" name="email_origen" value="">
+    <button type="submit" class="btn btn-default">Enviar</button>
+</form>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>
